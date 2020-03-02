@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Game</title>
+
+	<style>
+		.styleCar{
+			position: absolute; 
+			z-index: 100;
+			width: 30px; 
+			height: 60px;
+			top: 100px;
+			left: 100px;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			position: relative;
+			background-color: black;
+			margin: 0;
+			padding: 0; 
+			width: 100%;
+		}
+	</style>
+</head>
+<body>
+
+<canvas id='terrain'></canvas>
+
+<img src="lamba1.jpg" id="lamba1" class="styleCar">
+
+
+<script>
+
+var road1 = new Image();
+road1.src = "1.png";
+
+var road3 = new Image();
+road3.src = "3.png";
+
+var road7 = new Image();
+road7.src = "7.png";
+
+var road8 = new Image();
+road8.src = "8.png";
+
+var road9 = new Image();
+road9.src = "9.png";
+
+
+var canvas = document.getElementById('terrain');
+var ctx = canvas.getContext("2d");
+var car = document.getElementById('lamba1').style;
+var deg = 0;
+
+var cellsize = 100; //Размер одной клетки в пикселях
+var widthC = 24; //Ширина игрового поля по клеткам
+var heightC = 16; //Высота игрового поля по клеткам 
+var toRad = Math.PI/180; //Удобная переменная для перевода углы в радианы
+
+
+canvas.width = 2400;
+canvas.height = 1600;
+// canvas.style.border = 'solid red 10px';
+// canvas.style.padding = '0';
+// canvas.style.position = 'absolute';
+// canvas.style.display = 'block';
+document.body.appendChild(canvas);
+
+
+function lamba(){
+// 
+L = 100; T = 100; speed  = 10;
+document.body.onkeydown = function (event){
+
+
+   var e = window.event || event;
+   var degLeft = -90;
+   var degRight = 90; 
+   var degTop = 0;
+   var degDown = 180;
+
+
+
+  if (e.keyCode == 37){L -= speed, 30; car.left = L + 'px'; document.getElementById('lamba1').style.transform = 'rotate('+degLeft +'deg)'}
+ 
+
+   if (e.keyCode == 38){T -= speed; car.top  = T + 'px'; document.getElementById('lamba1').style = 'transform: rotate('+degTop +'deg)'}
+   	
+   if (e.keyCode == 39){L += speed; car.left = L + 'px'; document.getElementById('lamba1').style = 'transform: rotate('+degRight +'deg)'}
+  
+   if (e.keyCode == 40){T += speed; car.top  = T + 'px'; document.getElementById('lamba1').style = 'transform: rotate('+degDown +'deg)'}
+  
+   }
+}
+
+// lamba1.onclick = function() {
+// let start = Date.now();
+
+// const koef = 150;
+// let rotate = 0;
+// let speed = 1;
+// let xCoef;
+// let yCoef;
+
+// document.body.onkeydown = function (event){
+// let timer = setInterval(function() {
+// 	let timePassed = Date.now() - start;
+
+// 	if(event.keyCode == 37){
+// 		rotate -= koef;
+// 	}else if(event.keyCode == 39){
+// 		rotate += koef;
+// 	}
+
+// 	xCoef = Math.sign(Math.sin(rotate*Math.PI/180));
+// 	yCoef = Math.sign(-1*Math.cos(rotate*Math.PI/180));
+
+// 	lamba1.style.left = speed * xCoef * timePassed /20 + 'px';
+// 	lamba1.style.top = speed * yCoef * timePassed /20 + 'px';
+
+// 	if (false) clearInterval(timer);
+// 	}, 20);
+// }
+// }
+
+
+
+
+function drawRotatedImage(image, x, y, angle) { 
+    ctx.save(); 
+
+    ctx.translate(x+cellsize/2, y+cellsize/2);
+    ctx.rotate(angle * toRad);
+    
+    ctx.drawImage(image, -cellsize/2, -cellsize/2);
+    
+    ctx.restore(); 
+ }
+
+
+function drawRoad1(x,y) {
+	var div = document.createElement('div');
+	div.style.cssText = `width: 100px; height: 100px; 
+	background-image: url(1.png); 
+	position: absolute;
+	left: ${x}px;
+	top: ${y}px;`;
+	document.body.appendChild(div);
+}
+function drawRoad2(x,y) {
+	var div = document.createElement('div');
+	div.style.cssText = `width: 100px; height: 100px; 
+	background-image: url(1.2.png); 
+	position: absolute;
+	left: ${x}px;
+	top: ${y}px;`;
+	document.body.appendChild(div);
+}
+function drawRoad3(x,y) {
+	var div = document.createElement('div');
+	div.style.cssText = `width: 100px; height: 100px; 
+	background-image: url(tl.png); 
+	position: absolute;
+	left: ${x}px;
+	top: ${y}px;`;
+	document.body.appendChild(div);
+}
+function drawRoad4(x,y) {
+	var div = document.createElement('div');
+	div.style.cssText = `width: 100px; height: 100px; 
+	background-image: url(tr.png); 
+	position: absolute;
+	left: ${x}px;
+	top: ${y}px;`;
+	document.body.appendChild(div); 
+}
+function drawRoad5(x,y) {
+	var div = document.createElement('div');
+	div.style.cssText = `width: 100px; height: 100px; 
+	background-image: url(lb.png); 
+	position: absolute;
+	left: ${x}px;
+	top: ${y}px;`;
+	document.body.appendChild(div);   
+}
+function drawRoad6(x,y) {
+	var div = document.createElement('div');
+	div.style.cssText = `width: 100px; height: 100px; 
+	background-image: url(br.png); 
+	position: absolute;
+	left: ${x}px;
+	top: ${y}px;`;
+	document.body.appendChild(div);    
+}
+function drawRoad7(x,y) {
+	var div = document.createElement('div');
+	div.style.cssText = `width: 100px; height: 100px; 
+	background-image: url(3.png); 
+	position: absolute;
+	left: ${x}px;
+	top: ${y}px;`;
+	document.body.appendChild(div);   
+}
+//игровое поле и отрисовка блоков на ней
+var map=[
+    [3,2,2,2,7,2,2,2,2,2,2,2,2,2,2,2,2,7,2,2,2,2,2,4],
+    [0,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,0],
+    [0,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,7,2,2,2,2,2,7],
+    [0,1,1,1,7,2,2,2,2,2,2,2,2,2,2,2,2,0,1,1,1,1,1,0],
+    [0,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,7,2,7,2,7,2,7],
+    [0,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,0,1,0],
+    [7,2,2,2,7,2,2,2,7,2,7,2,2,2,7,2,2,0,1,0,1,0,1,0],
+    [0,1,1,1,0,1,1,1,0,1,0,1,1,1,0,1,1,0,1,0,1,0,1,0],
+    [0,1,1,1,7,2,2,2,7,1,0,1,1,1,0,1,1,0,7,0,7,0,7,7],
+    [0,1,1,1,0,1,1,1,7,2,7,1,1,1,0,1,1,0,1,0,1,0,1,0],
+    [7,2,2,2,7,1,1,1,0,1,7,2,7,2,7,2,2,7,1,0,1,0,1,0],
+    [0,1,1,1,0,1,1,1,0,1,0,1,0,1,0,1,1,0,1,0,7,0,1,0],
+    [0,1,1,1,7,2,2,2,7,2,0,1,0,1,0,1,1,0,1,0,1,0,1,0],
+    [0,1,1,1,0,1,1,1,0,1,0,1,0,1,0,1,1,0,1,0,1,0,1,0],
+    [0,1,1,1,0,1,1,1,0,1,0,1,0,1,0,1,1,0,1,0,1,0,1,0],
+    [5,2,2,2,7,2,2,2,7,2,7,2,7,2,7,2,2,7,2,7,2,7,2,6]
+	];
+
+function drawField(array){
+
+    for (var i=0;i<widthC;i++){
+        for (var j=0;j<heightC;j++){
+            switch (array[j][i]) {
+                case 0:
+                    drawRoad1(cellsize*i,cellsize*j);
+                    break;
+                case 2:
+                	drawRoad2(cellsize*i, cellsize*j);
+                	break;
+                case 3: 
+                	drawRoad3(cellsize*i, cellsize*j);
+                	break;
+                case 4: 
+                	drawRoad4(cellsize*i, cellsize*j);
+                	break;
+                case 5: 
+                	drawRoad5(cellsize*i, cellsize*j);
+                	break;
+                case 6: 
+                	drawRoad6(cellsize*i, cellsize*j);
+                	break;
+                case 7: 
+                	drawRoad7(cellsize*i, cellsize*j);
+                	break;
+            }
+        }
+    }
+
+}
+
+drawField(map);
+
+</script>
+</body>
+</html>
